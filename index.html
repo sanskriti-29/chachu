@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Father's Day Chachuu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --navy-deep:#091428;
+    --navy:#102449;
+    --navy-mid:#16315e;
+    --blue-soft:#7fa8d9;
+    --gold:#e6bb5a;
+    --gold-bright:#f3d27e;
+    --cream:#faf6ed;
+    --white:#ffffff;
+    --line: rgba(230,187,90,0.25);
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.14);
+    --shadow-gold: 0 0 40px rgba(230,187,90,0.25);
+    --font-display:'Poppins', sans-serif;
+    --font-serif:'Lora', serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-display);
+    background:var(--navy-deep);
+    color:var(--cream);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  ::selection{background:var(--gold); color:var(--navy-deep);}
+
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%; display:block;}
+  section{position:relative; padding:120px 6vw; z-index:2;}
+
+  /* ---------- Scrollbar ---------- */
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--navy-deep);}
+  ::-webkit-scrollbar-thumb{background:var(--navy-mid); border-radius:10px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- Section eyebrow / heading system ---------- */
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:0.78rem; letter-spacing:0.32em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:''; width:28px; height:1px; background:var(--gold);
+  }
+  .section-title{
+    font-size:clamp(2rem, 4.2vw, 3.2rem);
+    font-weight:700;
+    color:var(--white);
+    margin-bottom:16px;
+    letter-spacing:-0.01em;
+  }
+  .section-sub{
+    color:rgba(250,246,237,0.65);
+    font-size:1.05rem;
+    max-width:560px;
+    margin-bottom:60px;
+  }
+  .section-header{ text-align:center; }
+  .section-header .section-sub{ margin-left:auto; margin-right:auto; }
+  .center{ text-align:center; }
+
+  /* ============ BACKGROUND CANVAS (stars/particles) ============ */
+  #bg-stars{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+  }
+  .sky-gradient{
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(127,168,217,0.18), transparent 60%),
+      linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 45%, var(--navy-deep) 100%);
+    pointer-events:none;
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    backdrop-filter:blur(14px);
+    background:rgba(9,20,40,0.45);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  nav.scrolled{
+    background:rgba(9,20,40,0.75);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-weight:700; font-size:1.1rem; letter-spacing:0.02em;
+    display:flex; align-items:center; gap:8px; color:var(--white);
+  }
+  .logo i{color:var(--gold);}
+  .nav-links{display:flex; gap:34px; font-size:0.92rem; font-weight:500;}
+  .nav-links a{
+    color:rgba(250,246,237,0.75); position:relative; padding:4px 0;
+    transition:color .25s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px;
+    background:var(--gold); transition:width .3s ease;
+  }
+  .nav-links a:hover{color:var(--gold-bright);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:200;}
+  .nav-toggle span{width:24px; height:2px; background:var(--cream); transition:.3s;}
+
+  /* ============ HERO ============ */
+  .hero{
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:140px 6vw 80px;
+    position:relative;
+  }
+  .hero-star{
+    font-size:1.4rem; color:var(--gold); margin-bottom:22px;
+    animation: pulseStar 2.6s ease-in-out infinite;
+  }
+  @keyframes pulseStar{ 0%,100%{opacity:.5; transform:scale(1);} 50%{opacity:1; transform:scale(1.15);} }
+  .hero h1{
+    font-size:clamp(2.6rem, 8vw, 5.6rem);
+    font-weight:800;
+    color:var(--white);
+    letter-spacing:-0.02em;
+    line-height:1.05;
+    text-shadow:0 0 60px rgba(230,187,90,0.18);
+  }
+  .hero h1 .heart{
+    display:inline-block;
+    color:#e8788a;
+    animation: heartbeat 1.6s ease-in-out infinite;
+  }
+  @keyframes heartbeat{
+    0%,100%{transform:scale(1);} 15%{transform:scale(1.25);} 30%{transform:scale(1);} 45%{transform:scale(1.2);} 60%{transform:scale(1);}
+  }
+  .hero p.sub{
+    margin-top:24px;
+    font-size:clamp(1.05rem, 2vw, 1.35rem);
+    color:rgba(250,246,237,0.72);
+    font-family:var(--font-serif);
+    font-style:italic;
+    max-width:620px;
+  }
+  .hero-divider{
+    width:1px; height:60px;
+    background:linear-gradient(180deg, var(--gold), transparent);
+    margin:42px auto;
+  }
+  .btn-gold{
+    position:relative;
+    display:inline-flex; align-items:center; gap:10px;
+    padding:17px 42px;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color:var(--navy-deep);
+    font-weight:700; font-size:1rem; letter-spacing:0.02em;
+    border:none; border-radius:50px;
+    cursor:pointer;
+    box-shadow:0 8px 30px rgba(230,187,90,0.3);
+    transition:transform .3s ease, box-shadow .3s ease;
+    font-family:var(--font-display);
+  }
+  .btn-gold:hover{ transform:translateY(-3px); box-shadow:0 14px 40px rgba(230,187,90,0.45); }
+  .btn-gold:active{ transform:translateY(-1px); }
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 38px;
+    background:transparent;
+    border:1px solid var(--glass-border);
+    color:var(--cream);
+    border-radius:50px;
+    font-weight:600; font-size:0.98rem;
+    cursor:pointer;
+    backdrop-filter:blur(8px);
+    transition:.3s;
+    font-family:var(--font-display);
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); background:rgba(230,187,90,0.06); }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:rgba(250,246,237,0.45);
+  }
+  .scroll-cue .chev{
+    width:14px; height:14px; border-right:1px solid var(--gold); border-bottom:1px solid var(--gold);
+    transform:rotate(45deg); animation:chevDown 1.8s ease-in-out infinite;
+  }
+  @keyframes chevDown{ 0%{opacity:0; transform:translateY(-6px) rotate(45deg);} 50%{opacity:1;} 100%{opacity:0; transform:translateY(6px) rotate(45deg);} }
+
+  /* ============ ABOUT CARDS ============ */
+  .about-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:26px;
+    max-width:1180px; margin:0 auto;
+  }
+  .about-card{
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius:20px;
+    padding:42px 28px;
+    text-align:center;
+    backdrop-filter:blur(10px);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .4s;
+    opacity:0; transform:translateY(36px);
+  }
+  .about-card.in-view{ opacity:1; transform:translateY(0); }
+  .about-card:hover{
+    transform:translateY(-10px);
+    border-color:rgba(230,187,90,0.45);
+    box-shadow:0 20px 50px rgba(0,0,0,0.35), var(--shadow-gold);
+  }
+  .about-icon{
+    width:64px; height:64px; margin:0 auto 22px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.7rem; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(230,187,90,0.25), rgba(230,187,90,0.05));
+    border:1px solid var(--line);
+    transition:transform .4s ease;
+  }
+  .about-card:hover .about-icon{ transform:scale(1.1) rotate(-6deg); }
+  .about-card h3{ font-size:1.18rem; color:var(--white); margin-bottom:10px; font-weight:600; }
+  .about-card p{ font-size:0.92rem; color:rgba(250,246,237,0.6); }
+
+  /* ============ GALLERY ============ */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-rows:200px;
+    gap:18px;
+    max-width:1180px; margin:0 auto;
+  }
+  .gallery-item{
+    position:relative; overflow:hidden; border-radius:16px;
+    border:1px solid var(--glass-border);
+    opacity:0; transform:scale(0.94); transition:opacity .6s ease, transform .6s ease;
+  }
+  .gallery-item.in-view{ opacity:1; transform:scale(1); }
+  .gallery-item:nth-child(1){grid-column:span 2; grid-row:span 2;}
+  .gallery-item:nth-child(4){grid-column:span 2;}
+  .gallery-item img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s cubic-bezier(.2,.8,.2,1), filter .6s ease;
+    filter:saturate(0.92) brightness(0.92);
+  }
+  .gallery-item:hover img{ transform:scale(1.08); filter:saturate(1.05) brightness(1); }
+  .gallery-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 50%, rgba(9,20,40,0.85) 100%);
+    display:flex; align-items:flex-end; padding:18px;
+    opacity:0; transition:opacity .4s ease;
+  }
+  .gallery-item:hover .gallery-overlay{ opacity:1; }
+  .gallery-overlay span{ color:var(--gold-bright); font-size:0.85rem; font-weight:500; font-family:var(--font-serif); font-style:italic; }
+
+  /* ============ TIMELINE ============ */
+  .timeline{
+    position:relative; max-width:760px; margin:0 auto;
+  }
+  .timeline::before{
+    content:''; position:absolute; left:24px; top:6px; bottom:6px; width:1px;
+    background:linear-gradient(180deg, var(--gold), rgba(230,187,90,0.15) 90%);
+  }
+  @media (min-width:768px){
+    .timeline::before{ left:50%; transform:translateX(-50%); }
+  }
+  .tl-item{
+    position:relative; padding-left:64px; margin-bottom:56px;
+    opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease;
+  }
+  .tl-item.in-view{ opacity:1; transform:translateY(0); }
+  .tl-item:last-child{ margin-bottom:0; }
+  .tl-dot{
+    position:absolute; left:14px; top:4px;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--navy-deep);
+    border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 6px rgba(230,187,90,0.08);
+  }
+  .tl-dot::after{ content:''; width:7px; height:7px; border-radius:50%; background:var(--gold); }
+  .tl-card{
+    background:var(--glass); border:1px solid var(--glass-border); border-radius:16px;
+    padding:26px 28px; backdrop-filter:blur(10px);
+  }
+  .tl-year{ color:var(--gold); font-size:0.8rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; margin-bottom:8px; }
+  .tl-card h3{ color:var(--white); font-size:1.15rem; margin-bottom:8px; font-weight:600; }
+  .tl-card p{ color:rgba(250,246,237,0.62); font-size:0.94rem; }
+
+  @media (min-width:768px){
+    .tl-item{ padding-left:0; width:50%; }
+    .tl-item:nth-child(odd){ padding-right:56px; text-align:right; }
+    .tl-item:nth-child(even){ padding-left:56px; margin-left:50%; }
+    .tl-dot{ left:auto; }
+    .tl-item:nth-child(odd) .tl-dot{ right:-11px; left:auto; }
+    .tl-item:nth-child(even) .tl-dot{ left:-11px; }
+  }
+
+  /* ============ MESSAGE / LETTER ============ */
+  .letter-wrap{ max-width:720px; margin:0 auto; }
+  .letter-card{
+    background:linear-gradient(165deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    border:1px solid var(--glass-border);
+    border-radius:24px;
+    padding:56px 50px;
+    backdrop-filter:blur(14px);
+    position:relative;
+    box-shadow:0 30px 80px rgba(0,0,0,0.35);
+  }
+  .letter-card::before{
+    content:'\201C';
+    position:absolute; top:6px; left:28px;
+    font-family:var(--font-serif);
+    font-size:5rem; color:rgba(230,187,90,0.18); line-height:1;
+  }
+  .letter-greeting{ font-family:var(--font-serif); font-size:1.3rem; color:var(--gold-bright); margin-bottom:22px; font-style:italic;}
+  #typewriter-text{
+    font-family:var(--font-serif);
+    font-size:1.08rem;
+    color:rgba(250,246,237,0.88);
+    line-height:1.9;
+    white-space:pre-wrap;
+  }
+  .typed-cursor{ display:inline-block; width:2px; background:var(--gold); margin-left:2px; animation:blink 0.9s steps(1) infinite; }
+  @keyframes blink{ 50%{opacity:0;} }
+  .letter-sign{ margin-top:30px; font-family:var(--font-serif); font-style:italic; color:var(--gold); font-size:1.1rem; opacity:0; transition:opacity .6s ease; }
+  .letter-sign.show{ opacity:1; }
+
+  /* ============ REASONS FLIP CARDS ============ */
+  .reasons-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:26px;
+    max-width:1080px; margin:0 auto;
+  }
+  .flip-card{ perspective:1200px; height:220px; opacity:0; transform:translateY(30px); transition:opacity .6s ease, transform .6s ease;}
+  .flip-card.in-view{ opacity:1; transform:translateY(0); }
+  .flip-inner{
+    position:relative; width:100%; height:100%;
+    transition:transform .7s cubic-bezier(.2,.8,.2,1);
+    transform-style:preserve-3d;
+  }
+  .flip-card:hover .flip-inner, .flip-card.flipped .flip-inner{ transform:rotateY(180deg); }
+  .flip-front, .flip-back{
+    position:absolute; inset:0; backface-visibility:hidden;
+    border-radius:18px; border:1px solid var(--glass-border);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:24px; text-align:center;
+  }
+  .flip-front{
+    background:var(--glass); backdrop-filter:blur(10px);
+  }
+  .flip-front i{ font-size:2rem; color:var(--gold); margin-bottom:14px; }
+  .flip-front span{ color:var(--white); font-weight:600; font-size:1.02rem; }
+  .flip-back{
+    background:linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color:var(--navy-deep);
+    transform:rotateY(180deg);
+    font-weight:500; font-size:0.95rem; line-height:1.55;
+  }
+
+  /* ============ SURPRISE ============ */
+  .surprise-section{ text-align:center; }
+  .surprise-box{
+    max-width:560px; margin:0 auto;
+    background:var(--glass); border:1px solid var(--glass-border); border-radius:24px;
+    padding:60px 40px; backdrop-filter:blur(10px);
+    position:relative; overflow:hidden;
+  }
+  #confetti-canvas{ position:fixed; inset:0; pointer-events:none; z-index:300; }
+  .btn-surprise{
+    font-size:1.05rem; padding:19px 46px;
+  }
+  .surprise-message{
+    margin-top:30px; font-family:var(--font-serif); font-style:italic;
+    font-size:1.25rem; color:var(--gold-bright);
+    max-height:0; overflow:hidden; opacity:0;
+    transition:max-height .8s ease, opacity .8s ease, margin-top .8s ease;
+  }
+  .surprise-message.show{ max-height:200px; opacity:1; }
+  .surprise-message i{ color:#e8788a; margin-left:6px; }
+
+  /* ============ FOOTER ============ */
+  footer{
+    padding:70px 6vw 40px; text-align:center;
+    border-top:1px solid var(--line);
+    position:relative; z-index:2;
+  }
+  .footer-quote{
+    font-family:var(--font-serif); font-style:italic;
+    font-size:clamp(1.1rem, 2.4vw, 1.5rem);
+    color:var(--cream); max-width:600px; margin:0 auto 28px;
+    line-height:1.6;
+  }
+  .footer-quote::before, .footer-quote::after{ color:var(--gold); }
+  .social-row{ display:flex; justify-content:center; gap:18px; margin-bottom:30px; }
+  .social-row a{
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid var(--glass-border);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cream); transition:.3s;
+  }
+  .social-row a:hover{ background:var(--gold); color:var(--navy-deep); border-color:var(--gold); transform:translateY(-4px); }
+  .copyright{ color:rgba(250,246,237,0.4); font-size:0.85rem; }
+  .copyright .heart{ color:#e8788a; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:900px){
+    .about-grid{ grid-template-columns:repeat(2, 1fr); }
+    .reasons-grid{ grid-template-columns:repeat(2, 1fr); }
+    .gallery-grid{ grid-template-columns:repeat(2, 1fr); grid-auto-rows:160px; }
+    .gallery-item:nth-child(1){ grid-column:span 2; grid-row:span 1; }
+  }
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed; top:0; right:0; height:100svh; width:72%;
+      background:rgba(9,20,40,0.97); backdrop-filter:blur(20px);
+      flex-direction:column; justify-content:center; align-items:flex-start;
+      padding:40px; gap:28px;
+      transform:translateX(100%); transition:transform .4s ease;
+      border-left:1px solid var(--line);
+    }
+    .nav-links.open{ transform:translateX(0); }
+    .nav-toggle{ display:flex; }
+    section{ padding:90px 6vw; }
+  }
+  @media (max-width:600px){
+    .about-grid{ grid-template-columns:1fr; }
+    .reasons-grid{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:1fr; }
+    .gallery-item:nth-child(1), .gallery-item:nth-child(4){ grid-column:span 1; grid-row:span 1; }
+    .letter-card{ padding:40px 26px; }
+    .flip-card{ height:200px; }
+  }
+
+  /* Focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold-bright); outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sky-gradient"></div>
+<canvas id="bg-stars"></canvas>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo"><i class="fa-solid fa-star"></i> For Chachu</div>
+  <div class="nav-links" id="navLinks">
+    <a href="#about" class="nav-link">About</a>
+    <a href="#gallery" class="nav-link">Gallery</a>
+    <a href="#timeline" class="nav-link">Memories</a>
+    <a href="#message" class="nav-link">Letter</a>
+    <a href="#reasons" class="nav-link">Reasons</a>
+    <a href="#surprise" class="nav-link">Surprise</a>
+  </div>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-star"><i class="fa-solid fa-star"></i></div>
+  <h1>Happy Father's Day Chachuu <span class="heart">❤️</span></h1>
+  <p class="sub">Celebrating the love, strength, and wisdom of my chachu.</p>
+  <div class="hero-divider"></div>
+  <button class="btn-gold" id="scrollToMessage">
+    <i class="fa-solid fa-heart"></i> Thank You, Chachu
+  </button>
+  <div class="scroll-cue"><span>Scroll</span><div class="chev"></div></div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <div class="eyebrow">Who He Is</div>
+    <h2 class="section-title">About Chachu</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Four words, one man — everything he's been to me.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-icon">🦸</div>
+      <h3>My Hero</h3>
+      <p>The one who always showed up, no cape required.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🌟</div>
+      <h3>My Guide</h3>
+      <p>Steady hands and steadier wisdom, every step of the way.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🤝</div>
+      <h3>My Best Friend</h3>
+      <p>The funniest person I know.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">💙</div>
+      <h3>My Inspiration</h3>
+      <p>Living proof that quiet strength speaks the loudest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <div class="eyebrow">Picture Perfect</div>
+    <h2 class="section-title">Chachu Gallery</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">A few of my favorite moments with you.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="chachu.1.jpeg" alt="Chachu with the family, photo 1">
+      <div class="gallery-overlay"><span>With you, always</span></div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="chachu.2.jpeg" alt="Chachu with the family, photo 2">
+      <div class="gallery-overlay"><span>The whole gang</span></div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="chachu.3.jpeg" alt="Chachu portrait, photo 3">
+      <div class="gallery-overlay"><span>That smile</span></div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="chachu.4.jpeg" alt="Chachu with friends, photo 4">
+      <div class="gallery-overlay"><span>Good company</span></div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="chachu.5.jpeg" alt="Chachu with the family, photo 5">
+      <div class="gallery-overlay"><span>Family first</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-header">
+    <div class="eyebrow">Through the Years</div>
+    <h2 class="section-title">Memories Timeline</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">A few moments that still feel like yesterday.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">Always There</div>
+        <h3>Showing Up</h3>
+        <p>Every family gathering, every celebration — you were always there.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">Growing Up</div>
+        <h3>Stories and Laughter</h3>
+        <p>You always had a story, a joke, or some advice exactly when I needed it.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">Today</div>
+        <h3>Family Moments</h3>
+        <p>Every photo together is a memory I'll keep forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MESSAGE -->
+<section id="message">
+  <div class="section-header">
+    <div class="eyebrow">From My Heart</div>
+    <h2 class="section-title">A Letter to Chachu</h2>
+  </div>
+  <div class="letter-wrap">
+    <div class="letter-card">
+      <div class="letter-greeting">Dear Chachu,</div>
+      <p> Thank you for always making me smile and for being so caring and supportive. I am lucky to have such a fun and loving uncle like you. Wishing you lots of happiness, good health, and success always.</p>
+      <div class="letter-sign" id="letterSign">With all my love,<br>Sanskriti</div>
+    </div>
+  </div>
+</section>
+
+<!-- REASONS -->
+<section id="reasons">
+  <div class="section-header">
+    <div class="eyebrow">Six Truths</div>
+    <h2 class="section-title">Reasons I Love My Chachu</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Hover or tap each card to flip it.</p>
+  </div>
+  <div class="reasons-grid">
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-front"><i class="fa-solid fa-shield-heart"></i><span>You Protect</span></div>
+      <div class="flip-back">You made the world feel safe and warm just by being around.</div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-front"><i class="fa-solid fa-comments"></i><span>You Listen</span></div>
+      <div class="flip-back">Even when I rambled about nothing, you made it feel like everything.</div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-front"><i class="fa-solid fa-hand-fist"></i><span>You Show Up</span></div>
+      <div class="flip-back">Every family event, every small thing that was a big thing to me.</div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-front"><i class="fa-solid fa-graduation-cap"></i><span>You Teach</span></div>
+      <div class="flip-back">Not just facts — patience, fairness, and how to figure things out myself.</div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-front"><i class="fa-solid fa-face-laugh-beam"></i><span>You Laugh</span></div>
+      <div class="flip-back">Your jokes are somehow still the funniest thing I know.</div>
+    </div></div>
+    <div class="flip-card"><div class="flip-inner">
+      <div class="flip-front"><i class="fa-solid fa-compass"></i><span>You Guide</span></div>
+      <div class="flip-back">You never told me the answer — you taught me how to find it.</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- SURPRISE -->
+<section id="surprise" class="surprise-section">
+  <div class="surprise-box">
+    <div class="eyebrow center" style="justify-content:center;">One Last Thing</div>
+    <h2 class="section-title">A Little Surprise</h2>
+    <p class="section-sub center" style="margin-left:auto;margin-right:auto;">There's something hiding in here for you.</p>
+    <button class="btn-gold btn-surprise" id="surpriseBtn">
+      <i class="fa-solid fa-gift"></i> Open Surprise
+    </button>
+    <p class="surprise-message" id="surpriseMsg">
+      Thank you for always being there for me. Happy Father's Day! <i class="fa-solid fa-heart"></i>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-quote">"A chachu is someone you look up to no matter how tall you grow."</p>
+  <div class="social-row">
+    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+    <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+  </div>
+  <p class="copyright">Made with <span class="heart">❤️</span> for Chachu &mdash; &copy; <span id="year"></span> All Rights Reserved.</p>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ===================== NAV ===================== */
+const navbar = document.getElementById('navbar');
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive:true });
+
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  navToggle.classList.toggle('active');
+});
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+document.getElementById('scrollToMessage').addEventListener('click', () => {
+  document.getElementById('message').scrollIntoView({ behavior:'smooth' });
+});
+
+/* ===================== STARFIELD BACKGROUND ===================== */
+const canvas = document.getElementById('bg-stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+let w, h;
+
+function resizeCanvas(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = document.documentElement.scrollHeight;
+}
+
+function initStars(){
+  const count = Math.floor((window.innerWidth * window.innerHeight) / 9000);
+  stars = [];
+  for(let i=0;i<count;i++){
+    stars.push({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*1.6 + 0.4,
+      baseAlpha: Math.random()*0.5 + 0.2,
+      speed: Math.random()*0.3 + 0.05,
+      drift: (Math.random()-0.5)*0.15,
+      twinkleSpeed: Math.random()*0.02 + 0.005,
+      twinklePhase: Math.random()*Math.PI*2,
+      gold: Math.random() < 0.18
+    });
+  }
+}
+
+function animateStars(t){
+  ctx.clearRect(0,0,w,h);
+  for(const s of stars){
+    s.twinklePhase += s.twinkleSpeed;
+    const alpha = s.baseAlpha + Math.sin(s.twinklePhase)*0.25;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = s.gold ? `rgba(230,187,90,${Math.max(alpha,0)})` : `rgba(250,246,237,${Math.max(alpha,0)})`;
+    ctx.fill();
+    s.y -= s.speed;
+    s.x += s.drift;
+    if(s.y < -10){ s.y = h + 10; s.x = Math.random()*w; }
+  }
+  requestAnimationFrame(animateStars);
+}
+
+resizeCanvas();
+initStars();
+requestAnimationFrame(animateStars);
+window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+
+/* ===================== SCROLL REVEAL ===================== */
+const revealEls = document.querySelectorAll('.about-card, .gallery-item, .tl-item, .flip-card');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if(entry.isIntersecting){
+      setTimeout(() => entry.target.classList.add('in-view'), i % 6 * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.15, rootMargin:'0px 0px -60px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ===================== TYPEWRITER LETTER ===================== */
+const letterText = `Thank you for every bit of love I never had to ask for, every joke that made the toughest days lighter, and every time you showed up just because you cared. You taught me how to laugh more, how to look out for family, and how to keep showing up for the people who matter. I don't say it enough, but I see it all, and I'm endlessly grateful to have you as my chachu.`;
+
+const typewriterEl = document.getElementById('typewriter-text');
+const letterSign = document.getElementById('letterSign');
+let typed = false;
+
+function typeWriter(){
+  if(typed) return;
+  typed = true;
+  let i = 0;
+  const cursor = document.createElement('span');
+  cursor.className = 'typed-cursor';
+  cursor.textContent = '\u00A0';
+
+  function step(){
+    if(i <= letterText.length){
+      typewriterEl.textContent = letterText.slice(0, i);
+      typewriterEl.appendChild(cursor);
+      i++;
+      setTimeout(step, 18);
+    } else {
+      cursor.remove();
+      letterSign.classList.add('show');
+    }
+  }
+  step();
+}
+
+const letterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      typeWriter();
+      letterObserver.disconnect();
+    }
+  });
+}, { threshold:0.4 });
+letterObserver.observe(document.getElementById('message'));
+
+/* ===================== FLIP CARDS (tap support on touch) ===================== */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => {
+    if(window.matchMedia('(hover: none)').matches){
+      card.classList.toggle('flipped');
+    }
+  });
+});
+
+/* ===================== SURPRISE + CONFETTI ===================== */
+const surpriseBtn = document.getElementById('surpriseBtn');
+const surpriseMsg = document.getElementById('surpriseMsg');
+const confettiCanvas = document.getElementById('confetti-canvas');
+const cctx = confettiCanvas.getContext('2d');
+let confettiPieces = [];
+let confettiRunning = false;
+
+function resizeConfetti(){
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+resizeConfetti();
+window.addEventListener('resize', resizeConfetti);
+
+const confettiColors = ['#e6bb5a', '#f3d27e', '#7fa8d9', '#faf6ed', '#e8788a'];
+
+function launchConfetti(){
+  confettiPieces = [];
+  const count = 140;
+  for(let i=0;i<count;i++){
+    confettiPieces.push({
+      x: Math.random()*confettiCanvas.width,
+      y: -20 - Math.random()*confettiCanvas.height*0.4,
+      w: Math.random()*8+4,
+      h: Math.random()*12+6,
+      color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+      speedY: Math.random()*3+2,
+      speedX: (Math.random()-0.5)*2,
+      rotation: Math.random()*360,
+      rotSpeed: (Math.random()-0.5)*10,
+      opacity: 1
+    });
+  }
+  if(!confettiRunning){
+    confettiRunning = true;
+    requestAnimationFrame(updateConfetti);
+  }
+}
+
+function updateConfetti(){
+  cctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+  let stillActive = false;
+  for(const p of confettiPieces){
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.rotation += p.rotSpeed;
+    if(p.y > confettiCanvas.height*0.75){
+      p.opacity -= 0.012;
+    }
+    if(p.y < confettiCanvas.height + 40 && p.opacity > 0){
+      stillActive = true;
+      cctx.save();
+      cctx.translate(p.x, p.y);
+      cctx.rotate(p.rotation * Math.PI/180);
+      cctx.globalAlpha = Math.max(p.opacity,0);
+      cctx.fillStyle = p.color;
+      cctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      cctx.restore();
+    }
+  }
+  if(stillActive){
+    requestAnimationFrame(updateConfetti);
+  } else {
+    cctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+    confettiRunning = false;
+  }
+}
+
+surpriseBtn.addEventListener('click', () => {
+  launchConfetti();
+  surpriseMsg.classList.add('show');
+  surpriseBtn.innerHTML = '<i class="fa-solid fa-heart"></i> Opened';
+  surpriseBtn.disabled = true;
+  surpriseBtn.style.opacity = '0.75';
+  surpriseBtn.style.cursor = 'default';
+});
+</script>
+
+</body>
+</html>
